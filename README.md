@@ -1,87 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ucapan Ulang Tahun</title>
+    <title>Selamat Ulang Tahun</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffccff;
+            background-color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
             overflow: hidden;
         }
-        .container {
-            text-align: center;
+
+        .page {
+            display: none;
+            height: 100vh;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
-        h1 {
-            font-size: 3rem;
-            color: #ff0066;
-            animation: fadeIn 3s infinite alternate;
-            cursor: pointer;
+
+        .page.active {
+            display: flex;
+            animation: fadeIn 1s ease-in-out;
         }
-        p {
-            font-size: 1.5rem;
-            color: #6600cc;
-            animation: bounce 2s infinite;
-        }
+
         @keyframes fadeIn {
-            from {
-                opacity: 0.5;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+
+        h1, h2 {
+            margin: 0;
         }
+
+        .typewriter {
+            display: inline-block;
+            border-right: 2px solid black;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(30, end), blink 0.5s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from { border-color: transparent; }
+            to { border-color: black; }
+        }
+
         .cake {
-            margin-top: 20px;
-            animation: rotate 5s infinite linear;
-            cursor: pointer;
+            position: relative;
+            width: 200px;
+            height: 300px;
+            background-color: #ffcccb;
+            border-radius: 10px;
         }
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 90px;
+            width: 20px;
+            height: 40px;
+            background: radial-gradient(circle, yellow, orange);
+            border-radius: 50%;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f06292;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="clickText">Selamat Ulang Tahun!</h1>
-        <p>Klik kue atau teks untuk pesan spesial 🎉</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Cupcake_icon.svg/512px-Cupcake_icon.svg.png" alt="Kue Ulang Tahun" class="cake" id="cakeImage" width="150">
-        <audio id="birthdaySong" autoplay loop>
+    <!-- Page 1 -->
+    <div class="page active" id="page1">
+        <h1>Halo Kak Tike, Selamat Ulang Tahun yang ke-18</h1>
+        <button class="next-btn" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page" id="page2">
+        <h1 class="typewriter">Aku ada sesuatu untukmu...</h1>
+        <button class="next-btn" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- Page 3 -->
+    <div class="page" id="page3">
+        <div class="cake">
+            <div class="flame"></div>
+        </div>
+        <h2>Happy Birthday, Kak Tike!</h2>
+        <audio autoplay loop>
             <source src="https://www.bensound.com/bensound-music/bensound-birthdaysong.mp3" type="audio/mpeg">
-            Browser Anda tidak mendukung audio HTML5.
         </audio>
     </div>
 
     <script>
-        // Tambahkan event untuk klik pada teks
-        document.getElementById("clickText").addEventListener("click", function() {
-            alert("Semoga hari ini menjadi awal yang indah untuk masa depan yang cerah!");
-        });
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
 
-        // Tambahkan event untuk klik pada gambar
-        document.getElementById("cakeImage").addEventListener("click", function() {
-            alert("Selamat menikmati harimu yang spesial! Jangan lupa potong kuenya 🎂");
-        });
+        function nextPage() {
+            pages[currentPage].classList.remove('active');
+            currentPage++;
+            if (currentPage < pages.length) {
+                pages[currentPage].classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
